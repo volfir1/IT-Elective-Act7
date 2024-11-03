@@ -1,0 +1,224 @@
+// src/scss/components/_buttons.scss
+@use '../abstracts/variables' as vars;
+@use '../abstracts/mixins' as mix;
+@use '../abstracts/functions' as fn;
+@use 'sass:color';
+
+// Base button styles
+.btn {
+    @include mix.button-base;
+    @include mix.transition;
+    font-family: vars.$font-secondary;
+    line-height: 1.5;
+    
+    // Disabled state
+    &:disabled,
+    &.disabled {
+      opacity: 0.65;
+      pointer-events: none;
+    }
+    
+    // Focus state
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px color.adjust(vars.$primary-color, $alpha: -0.75);
+    }
+}
+  
+// Button variants
+.btn-primary {
+    @include mix.button-variant(vars.$primary-color);
+}
+  
+.btn-secondary {
+    @include mix.button-variant(vars.$secondary-color);
+}
+  
+.btn-accent {
+    @include mix.button-variant(vars.$accent-color);
+}
+  
+.btn-success {
+    @include mix.button-variant(vars.$success-color);
+}
+  
+.btn-error {
+    @include mix.button-variant(vars.$error-color);
+}
+  
+.btn-warning {
+    @include mix.button-variant(vars.$warning-color, vars.$text-color);
+}
+  
+.btn-info {
+    @include mix.button-variant(vars.$info-color);
+}
+  
+// Outline buttons
+@mixin button-outline-variant($color) {
+    background-color: transparent;
+    border: vars.$border-radius solid $color;
+    color: $color;
+  
+    &:hover:not(:disabled) {
+      background-color: $color;
+      color: vars.$light-color;
+      @include mix.hover-lift(-2px);
+    }
+  
+    &:active:not(:disabled) {
+      background-color: color.adjust($color, $lightness: -5%);
+      border-color: color.adjust($color, $lightness: -5%);
+      transform: translateY(0);
+    }
+}
+  
+.btn-outline-primary {
+    @include button-outline-variant(vars.$primary-color);
+}
+  
+.btn-outline-secondary {
+    @include button-outline-variant(vars.$secondary-color);
+}
+  
+.btn-outline-accent {
+    @include button-outline-variant(vars.$accent-color);
+}
+  
+// Button sizes
+.btn-lg {
+    padding: vars.$spacing-md vars.$spacing-lg;
+    font-size: vars.$font-size-lg;
+    border-radius: vars.$border-radius-lg;
+}
+  
+.btn-sm {
+    padding: vars.$spacing-xs vars.$spacing-sm;
+    font-size: vars.$font-size-sm;
+    border-radius: vars.$border-radius-sm;
+}
+  
+// Icon buttons
+.btn-icon {
+    @include mix.flex-center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border-radius: 50%;
+  
+    &.btn-sm {
+      width: 2rem;
+      height: 2rem;
+    }
+  
+    &.btn-lg {
+      width: 3rem;
+      height: 3rem;
+    }
+  
+    i, svg {
+      font-size: 1.25em;
+    }
+}
+  
+// Block button
+.btn-block {
+    display: block;
+    width: 100%;
+}
+  
+// Loading state
+.btn-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+  
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1em;
+      height: 1em;
+      margin: -0.5em;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: btn-loading 0.75s infinite linear;
+    }
+}
+  
+@keyframes btn-loading {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+}
+  
+// Button group
+.btn-group {
+    @include mix.flex(row, flex-start, center, nowrap);
+    gap: vars.$spacing-xs;
+  
+    &.btn-group-vertical {
+      flex-direction: column;
+    }
+  
+    .btn {
+      &:not(:first-child):not(:last-child) {
+        border-radius: 0;
+      }
+  
+      &:first-child:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+  
+      &:last-child:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+}
+  
+// Button with badge
+.btn-badge {
+    position: relative;
+    
+    .badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 10px;
+      background-color: vars.$accent-color;
+      color: vars.$light-color;
+      font-size: vars.$font-size-sm;
+      line-height: 20px;
+      text-align: center;
+    }
+}
+  
+// Link button
+.btn-link {
+    padding: 0;
+    background: none;
+    border: none;
+    color: vars.$secondary-color;
+    font-weight: vars.$font-weight-normal;
+    text-decoration: none;
+  
+    &:hover {
+      color: color.adjust(vars.$secondary-color, $lightness: -15%);
+      text-decoration: underline;
+    }
+  
+    &:focus {
+      box-shadow: none;
+      text-decoration: underline;
+    }
+}

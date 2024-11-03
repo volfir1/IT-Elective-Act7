@@ -1,0 +1,215 @@
+// src/scss/layouts/_footer.scss
+@use '../abstracts/variables' as vars;
+@use '../abstracts/mixins' as mix;
+@use 'sass:color';
+
+.footer {
+    background-color: vars.$primary-color;
+    color: vars.$light-color;
+    padding: vars.$spacing-xl 0 vars.$spacing-lg;
+    position: relative;
+    bottom: 0;
+  
+    // Footer Logo
+    &-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: vars.$spacing-lg;
+  
+      img {
+        width: 50px;
+        height: auto;
+        margin-right: vars.$spacing-sm;
+      }
+  
+      h3 {
+        font-family: vars.$font-primary;
+        font-size: vars.$font-size-lg;
+        color: vars.$secondary-color;
+        margin: 0;
+      }
+    }
+  
+    // Footer Content Sections
+    &-content {
+      .footer-title {
+        color: vars.$secondary-color;
+        margin-bottom: vars.$spacing-md;
+        font-size: 1.2rem;
+        font-weight: vars.$font-weight-bold;
+        position: relative;
+        padding-bottom: vars.$spacing-sm;
+  
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 50px;
+          height: 2px;
+          background-color: vars.$secondary-color;
+        }
+      }
+  
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+  
+        li {
+          margin-bottom: vars.$spacing-sm;
+          
+          a {
+            color: color.adjust(vars.$light-color, $alpha: -0.2);
+            text-decoration: none;
+            transition: vars.$transition-base;
+            
+            &:hover {
+              color: vars.$secondary-color;
+              padding-left: vars.$spacing-xs;
+            }
+          }
+        }
+      }
+  
+      .footer-contact {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+  
+        li {
+          margin-bottom: vars.$spacing-sm;
+          display: flex;
+          align-items: flex-start;
+  
+          i {
+            margin-right: vars.$spacing-sm;
+            color: vars.$secondary-color;
+          }
+        }
+      }
+  
+      .footer-social {
+        display: flex;
+        gap: vars.$spacing-sm;
+        margin-top: vars.$spacing-md;
+  
+        a {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: color.adjust(vars.$light-color, $alpha: -0.9);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: vars.$light-color;
+          transition: vars.$transition-base;
+  
+          &:hover {
+            background: vars.$secondary-color;
+            transform: translateY(-3px);
+          }
+        }
+      }
+    }
+  
+    // Newsletter Section
+    &-newsletter {
+      .newsletter-form {
+        position: relative;
+        margin-top: vars.$spacing-md;
+  
+        input {
+          width: 100%;
+          padding: vars.$spacing-sm vars.$spacing-lg vars.$spacing-sm vars.$spacing-sm;
+          border: 1px solid color.adjust(vars.$light-color, $alpha: -0.8);
+          background: color.adjust(vars.$light-color, $alpha: -0.9);
+          border-radius: vars.$border-radius;
+          color: vars.$light-color;
+  
+          &::placeholder {
+            color: color.adjust(vars.$light-color, $alpha: -0.4);
+          }
+  
+          &:focus {
+            outline: none;
+            border-color: vars.$secondary-color;
+          }
+        }
+  
+        button {
+          position: absolute;
+          right: vars.$spacing-xs;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: vars.$secondary-color;
+          cursor: pointer;
+          transition: vars.$transition-base;
+  
+          &:hover {
+            color: color.adjust(vars.$secondary-color, $lightness: 10%);
+          }
+        }
+      }
+    }
+  
+    // Bottom Bar
+    &-bottom {
+      margin-top: vars.$spacing-xl;
+      padding-top: vars.$spacing-md;
+      border-top: 1px solid color.adjust(vars.$light-color, $alpha: -0.9);
+      text-align: center;
+  
+      p {
+        margin: 0;
+        color: color.adjust(vars.$light-color, $alpha: -0.3);
+  
+        a {
+          color: vars.$secondary-color;
+          text-decoration: none;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+  
+  // Responsive
+  @include mix.respond-to(md) {
+    .footer {
+      &-content {
+        margin-bottom: vars.$spacing-lg;
+      }
+    }
+  }
+  
+  @include mix.respond-to(sm) {
+    .footer {
+      padding: vars.$spacing-lg 0;
+  
+      &-logo {
+        justify-content: center;
+      }
+  
+      &-content {
+        text-align: center;
+  
+        .footer-title::after {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+  
+        .footer-social {
+          justify-content: center;
+        }
+      }
+  
+      &-contact li {
+        justify-content: center;
+      }
+    }
+  }

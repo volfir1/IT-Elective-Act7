@@ -1,0 +1,172 @@
+// src/scss/base/_utilities.scss
+@use 'sass:map';
+@use 'sass:math';
+@use '../abstracts/variables' as *;
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mix;
+
+// Z-indexes map (moved to top for reference)
+$utility-z-indexes: (
+  'modal': $z-index-modal,
+  'dropdown': $z-index-dropdown,
+  'sticky': $z-index-sticky,
+  'fixed': $z-index-fixed,
+  'modal-backdrop': $z-index-modal-backdrop,
+  'popover': $z-index-popover,
+  'tooltip': $z-index-tooltip
+);
+
+// Spacing Utilities
+$spacers: (
+  0: 0,
+  1: $spacing-xs,
+  2: $spacing-sm,
+  3: $spacing-md,
+  4: $spacing-lg,
+  5: $spacing-xl
+);
+
+// Margin and Padding
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @each $size, $value in $spacers {
+    .#{$abbrev}-#{$size} { #{$prop}: $value !important; }
+    .#{$abbrev}t-#{$size} { #{$prop}-top: $value !important; }
+    .#{$abbrev}r-#{$size} { #{$prop}-right: $value !important; }
+    .#{$abbrev}b-#{$size} { #{$prop}-bottom: $value !important; }
+    .#{$abbrev}l-#{$size} { #{$prop}-left: $value !important; }
+    .#{$abbrev}x-#{$size} {
+      #{$prop}-right: $value !important;
+      #{$prop}-left: $value !important;
+    }
+    .#{$abbrev}y-#{$size} {
+      #{$prop}-top: $value !important;
+      #{$prop}-bottom: $value !important;
+    }
+  }
+}
+
+// Display utilities
+$displays: none, inline, inline-block, block, table, table-row, table-cell, flex, inline-flex, grid;
+
+@each $display in $displays {
+  .d-#{$display} { display: $display !important; }
+  
+  @each $breakpoint, $width in $container-max-widths {
+    @include mix.respond-to($breakpoint) {
+      .d-#{$breakpoint}-#{$display} { display: $display !important; }
+    }
+  }
+}
+
+// Flex utilities
+.flex-row { flex-direction: row !important; }
+.flex-column { flex-direction: column !important; }
+.flex-wrap { flex-wrap: wrap !important; }
+.flex-nowrap { flex-wrap: nowrap !important; }
+
+.justify-content-start { justify-content: flex-start !important; }
+.justify-content-end { justify-content: flex-end !important; }
+.justify-content-center { justify-content: center !important; }
+.justify-content-between { justify-content: space-between !important; }
+.justify-content-around { justify-content: space-around !important; }
+
+.align-items-start { align-items: flex-start !important; }
+.align-items-end { align-items: flex-end !important; }
+.align-items-center { align-items: center !important; }
+.align-items-baseline { align-items: baseline !important; }
+.align-items-stretch { align-items: stretch !important; }
+
+// Position utilities
+.position-relative { position: relative !important; }
+.position-absolute { position: absolute !important; }
+.position-fixed { position: fixed !important; }
+.position-sticky { position: sticky !important; }
+
+// Width and Height
+$sizes: (
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%,
+  auto: auto
+);
+
+@each $prop, $abbrev in (width: w, height: h) {
+  @each $size, $value in $sizes {
+    .#{$abbrev}-#{$size} { #{$prop}: $value !important; }
+  }
+}
+
+// Background utilities
+.bg-primary { background-color: $primary-color !important; }
+.bg-secondary { background-color: $secondary-color !important; }
+.bg-accent { background-color: $accent-color !important; }
+.bg-light { background-color: $light-color !important; }
+.bg-dark { background-color: $dark-color !important; }
+.bg-white { background-color: white !important; }
+.bg-transparent { background-color: transparent !important; }
+
+// Border utilities
+.border { border: $border-radius solid $accent-color !important; }
+.border-0 { border: 0 !important; }
+.border-top { border-top: $border-radius solid $accent-color !important; }
+.border-right { border-right: $border-radius solid $accent-color !important; }
+.border-bottom { border-bottom: $border-radius solid $accent-color !important; }
+.border-left { border-left: $border-radius solid $accent-color !important; }
+
+.rounded { border-radius: $border-radius !important; }
+.rounded-sm { border-radius: $border-radius-sm !important; }
+.rounded-lg { border-radius: $border-radius-lg !important; }
+.rounded-circle { border-radius: 50% !important; }
+.rounded-0 { border-radius: 0 !important; }
+
+// Shadow utilities
+.shadow-none { box-shadow: none !important; }
+.shadow-sm { box-shadow: $box-shadow-sm !important; }
+.shadow { box-shadow: $box-shadow !important; }
+.shadow-lg { box-shadow: $box-shadow-lg !important; }
+
+// Visibility utilities
+.visible { visibility: visible !important; }
+.invisible { visibility: hidden !important; }
+
+// Overflow utilities
+.overflow-auto { overflow: auto !important; }
+.overflow-hidden { overflow: hidden !important; }
+.overflow-visible { overflow: visible !important; }
+.overflow-scroll { overflow: scroll !important; }
+
+// Screen Reader utilities
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
+}
+
+// Animation utilities
+.fade {
+  transition: opacity $transition-fade !important;
+  
+  &:not(.show) {
+    opacity: 0;
+  }
+}
+
+// Cursor utilities
+.cursor-pointer { cursor: pointer !important; }
+.cursor-default { cursor: default !important; }
+
+// User select utilities
+.user-select-none { user-select: none !important; }
+.user-select-all { user-select: all !important; }
+.user-select-auto { user-select: auto !important; }
+
+// Z-index utilities
+@each $key, $value in $utility-z-indexes {
+  .z-#{$key} { z-index: $value !important; }
+}

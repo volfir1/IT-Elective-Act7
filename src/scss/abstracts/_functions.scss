@@ -1,0 +1,86 @@
+// src/scss/abstracts/_functions.scss
+@use 'sass:math';
+@use 'sass:color';
+@use 'sass:map';
+@use 'variables' as vars;
+
+// Convert px to rem
+@function rem($pixels, $context: 16) {
+    @return math.div($pixels, $context) * 1rem;
+}
+
+// Convert px to em
+@function em($pixels, $context: 16) {
+    @return math.div($pixels, $context) * 1em;
+}
+
+// Strip unit from number
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return math.div($number, ($number * 0 + 1));
+    }
+    @return $number;
+}
+
+// Color functions using modern Sass color module
+@function tint($color, $percentage) {
+    @return color.adjust($color, $lightness: $percentage);
+}
+
+@function shade($color, $percentage) {
+    @return color.adjust($color, $lightness: -$percentage);
+}
+
+// Z-index management
+@function z($layer) {
+    $z-layers: (
+        'modal': vars.$z-index-modal,
+        'dropdown': vars.$z-index-dropdown,
+        'sticky': vars.$z-index-sticky,
+        'fixed': vars.$z-index-fixed,
+        'modal-backdrop': vars.$z-index-modal-backdrop,
+        'popover': vars.$z-index-popover,
+        'tooltip': vars.$z-index-tooltip
+    );
+    
+    @if map.has-key($z-layers, $layer) {
+        @return map.get($z-layers, $layer);
+    }
+    
+    @warn 'No z-index found for `#{$layer}`. Available layers: #{map.keys($z-layers)}';
+    @return null;
+}
+
+// Grid columns calculation
+@function grid-column($span, $columns: 12) {
+    @return math.percentage(math.div($span, $columns));
+}
+
+// Asset path helper
+@function asset($type, $file) {
+    @return '/src/assets/#{$type}/#{$file}';
+}
+
+// Color contrast using modern color module
+@function color-contrast($color) {
+    $luminance: color.lightness($color);
+    @return if($luminance > 50, vars.$dark-color, vars.$light-color);
+}
+
+// Map deep get
+@function map-deep-get($map, $keys...) {
+    @each $key in $keys {
+        $map: map.get($map, $key);
+    }
+    @return $map;
+}
+
+// Calculate aspect ratio
+@function aspect-ratio($width, $height) {
+    @return math.percentage(math.div($height, $width));
+}
+
+// CSS Variable helper
+@function css-var($variable) {
+    @return var(--#{$variable});
+}

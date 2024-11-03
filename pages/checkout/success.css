@@ -1,0 +1,226 @@
+/* Root Variables */
+:root {
+    --primary-color: #2c1810;
+    --secondary-color: #d4af37;
+    --text-color: #333333;
+    --light-gold: #f4e4bc;
+    --dark-gold: #996515;
+    --success-color: #28a745;
+    --transition-smooth: all 0.3s ease-in-out;
+}
+
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transition: var(--transition-smooth);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 3rem !important;
+}
+
+/* Success Icon Animation */
+.fa-check-circle {
+    color: var(--success-color) !important;
+    animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Main Message Styles */
+.display-4 {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.5s ease-out 0.3s both;
+}
+
+/* Alert Styles */
+.alert-success {
+    background-color: var(--light-gold);
+    border: none;
+    color: var(--primary-color);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    animation: fadeInUp 0.5s ease-out 0.6s both;
+}
+
+.alert-success strong {
+    color: var(--dark-gold);
+    font-size: 1.2rem;
+}
+
+/* Order Summary Box */
+.bg-light {
+    background-color: #f8f9fa !important;
+    border-radius: 12px;
+    animation: fadeInUp 0.5s ease-out 0.9s both;
+}
+
+.bg-light h4 {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Customer Details */
+.mb-1 strong {
+    color: var(--primary-color);
+    font-weight: 600;
+    min-width: 120px;
+    display: inline-block;
+}
+
+/* Order Items */
+.mb-3 strong {
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Order Totals */
+.border-top {
+    border-color: var(--light-gold) !important;
+}
+
+.row .col-6 {
+    padding: 0.5rem 1rem;
+}
+
+.text-end {
+    color: var(--dark-gold);
+    font-weight: 500;
+}
+
+.text-end strong {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+/* Confirmation Message */
+.text-muted {
+    color: var(--text-color) !important;
+    animation: fadeInUp 0.5s ease-out 1.2s both;
+}
+
+/* Action Button */
+.btn-primary {
+    background-color: var(--secondary-color);
+    border: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    transition: var(--transition-smooth);
+    animation: fadeInUp 0.5s ease-out 1.5s both;
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-gold);
+    color: white;
+    transform: translateX(5px);
+}
+
+.btn-lg {
+    font-size: 1.1rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .btn-primary {
+        display: none;
+    }
+    
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #ddd;
+    }
+    
+    .bg-light {
+        background-color: white !important;
+        padding: 0 !important;
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 2rem !important;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .fa-check-circle {
+        font-size: 4rem !important;
+    }
+    
+    .bg-light {
+        padding: 1rem !important;
+    }
+    
+    .btn-primary {
+        width: 100%;
+    }
+}
+
+/* Enhanced Focus States */
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+}
+
+/* Print Button */
+.print-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--dark-gold);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.print-button:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}

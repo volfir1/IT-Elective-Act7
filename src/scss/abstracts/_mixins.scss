@@ -1,0 +1,49 @@
+// Breakpoint manager
+@mixin respond-to($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (min-width: map-get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }
+}
+
+// Flexbox center
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// Card hover effect
+@mixin card-hover {
+    transition: $transition-base;
+    &:hover {
+        transform: $hover-transform;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+}
+
+// Background image cover
+@mixin bg-cover {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+// Button base styles
+@mixin button-base {
+    display: inline-block;
+    padding: $spacer * 0.5 $spacer;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: $transition-base;
+}
+
+// Section padding
+@mixin section-padding {
+    padding: $section-spacing 0;
+    @include respond-to('md') {
+        padding: ($section-spacing * 1.5) 0;
+    }
+}

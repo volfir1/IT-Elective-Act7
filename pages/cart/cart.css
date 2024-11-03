@@ -1,0 +1,219 @@
+/* Root Variables */
+:root {
+    --primary-color: #2c1810;
+    --secondary-color: #d4af37;
+    --text-color: #333333;
+    --light-gold: #f4e4bc;
+    --dark-gold: #996515;
+    --transition-smooth: all 0.3s ease-in-out;
+}
+
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Cart Header */
+h2.mb-4 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid var(--secondary-color);
+    padding-bottom: 1rem;
+}
+
+/* Cart Item Styles */
+.cart-item {
+    background: #ffffff;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: var(--transition-smooth);
+}
+
+.cart-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cart-item img {
+    border-radius: 8px;
+    border: 2px solid var(--light-gold);
+    transition: var(--transition-smooth);
+}
+
+.cart-item img:hover {
+    transform: scale(1.05);
+}
+
+/* Product Details */
+.cart-item h5 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.cart-item .text-muted {
+    color: var(--text-color) !important;
+    font-size: 0.9rem;
+}
+
+/* Price and Quantity Controls */
+.price {
+    color: var(--dark-gold);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.quantity-btn {
+    background: var(--light-gold);
+    border: none;
+    color: var(--primary-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    transition: var(--transition-smooth);
+}
+
+.quantity-btn:hover:not(:disabled) {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.quantity-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.quantity-input {
+    border: 2px solid var(--light-gold);
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Subtotal and Remove Button */
+.subtotal {
+    color: var(--dark-gold);
+    font-size: 1.2rem;
+}
+
+.remove-item {
+    border: none;
+    background: transparent;
+    color: #dc3545;
+    transition: var(--transition-smooth);
+}
+
+.remove-item:hover {
+    color: #bb2d3b;
+    transform: scale(1.1);
+}
+
+/* Footer Actions */
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: var(--transition-smooth);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    border: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-gold);
+    color: white;
+    transform: translateX(5px);
+}
+
+/* Alert Styles */
+#alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    min-width: 300px;
+}
+
+.alert {
+    background: white;
+    border-left: 4px solid var(--secondary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+.alert-success {
+    border-left-color: #28a745;
+}
+
+.alert-danger {
+    border-left-color: #dc3545;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Empty Cart State */
+.alert-info {
+    background: var(--light-gold);
+    border: none;
+    color: var(--primary-color);
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.alert-link {
+    color: var(--dark-gold);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+}
+
+.alert-link:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Total Section */
+h4.mb-3 {
+    color: var(--primary-color);
+    font-weight: 700;
+}

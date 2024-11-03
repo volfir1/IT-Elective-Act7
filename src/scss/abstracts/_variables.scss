@@ -1,0 +1,36 @@
+// Colors
+$primary: #343a40;
+$secondary: #6c757d;
+$light: #f8f9fa;
+$dark: #212529;
+$white: #ffffff;
+
+// Typography
+$font-family-base: 'Roboto', sans-serif;
+$font-family-heading: 'Playfair Display', serif;
+$font-size-base: 1rem;
+$line-height-base: 1.6;
+
+// Spacing
+$spacer: 1rem;
+$section-spacing: $spacer * 5;
+$container-padding: $spacer * 2;
+
+// Breakpoints
+$breakpoints: (
+    'sm': 576px,
+    'md': 768px,
+    'lg': 992px,
+    'xl': 1200px
+);
+
+// Z-index
+$z-index: (
+    'navbar': 1000,
+    'dropdown': 1000,
+    'modal': 1050
+);
+
+// Transitions
+$transition-base: all 0.3s ease;
+$hover-transform: translateY(-5px);

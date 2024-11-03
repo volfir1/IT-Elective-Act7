@@ -1,0 +1,252 @@
+// src/scss/pages/_login.scss
+@use '../abstracts/variables' as vars;
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mix;
+
+.login-container {
+    min-height: 100vh;
+    padding-top: fn.rem(80); // Account for fixed navbar
+    background-color: vars.$light-color;
+}
+
+.auth-wrapper {
+    @include mix.grid(2, 0);
+    min-height: calc(100vh - #{fn.rem(80)});
+    
+    @include mix.respond-to(md) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.auth-side {
+    .auth-image {
+        position: relative;
+        height: 100%;
+        min-height: fn.rem(300);
+        background: url('/src/assets/images/backgrounds/login-bg.avif') center/cover no-repeat;
+        
+        .overlay {
+            @include mix.fixed-full;
+            background: linear-gradient(
+                45deg,
+                rgba(vars.$primary-color, 0.7),
+                rgba(vars.$secondary-color, 0.3)
+            );
+        }
+        
+        .auth-quote {
+            @include mix.absolute-center;
+            text-align: center;
+            color: vars.$light-color;
+            z-index: z('fixed');
+            width: 80%;
+            
+            h2 {
+                @include mix.heading(fn.rem(40));
+                margin-bottom: fn.rem(16);
+            }
+            
+            p {
+                font-size: fn.rem(18);
+                font-family: vars.$font-secondary;
+            }
+        }
+    }
+}
+
+.auth-content {
+    @include mix.flex(column, center, center);
+    padding: fn.rem(40);
+    background-color: vars.$light-color;
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: fn.rem(480);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: fn.rem(40);
+    
+    h1 {
+        @include mix.heading(fn.rem(32));
+        color: vars.$primary-color;
+        margin-bottom: fn.rem(8);
+    }
+    
+    p {
+        color: fn.tint(vars.$text-color, 30%);
+    }
+}
+
+.auth-form {
+    .form-group {
+        margin-bottom: fn.rem(24);
+        
+        label {
+            display: block;
+            color: vars.$primary-color;
+            font-weight: vars.$font-weight-bold;
+            margin-bottom: fn.rem(8);
+        }
+    }
+    
+    .input-wrapper {
+        position: relative;
+        
+        i {
+            position: absolute;
+            left: fn.rem(16);
+            top: 50%;
+            transform: translateY(-50%);
+            color: vars.$accent-color;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: fn.rem(12) fn.rem(12) fn.rem(12) fn.rem(44);
+            border: 1px solid fn.tint(vars.$dark-color, 80%);
+            border-radius: vars.$border-radius;
+            font-size: fn.rem(16);
+            transition: vars.$transition-base;
+            
+            &:focus {
+                outline: none;
+                border-color: vars.$secondary-color;
+                box-shadow: 0 0 0 2px fn.tint(vars.$secondary-color, 85%);
+            }
+        }
+        
+        .password-toggle {
+            @include mix.button-base;
+            position: absolute;
+            right: fn.rem(16);
+            top: 50%;
+            transform: translateY(-50%);
+            padding: fn.rem(4);
+            color: vars.$accent-color;
+            background: none;
+            
+            &:hover {
+                color: vars.$secondary-color;
+            }
+        }
+    }
+}
+
+.form-options {
+    @include mix.flex(row, space-between, center);
+    margin-bottom: fn.rem(24);
+    
+    .remember-me {
+        @include mix.flex(row, flex-start, center);
+        gap: fn.rem(8);
+        color: vars.$text-color;
+        cursor: pointer;
+        
+        input[type="checkbox"] {
+            width: fn.rem(16);
+            height: fn.rem(16);
+        }
+    }
+    
+    .forgot-password {
+        color: vars.$accent-color;
+        text-decoration: none;
+        font-size: fn.rem(14);
+        
+        &:hover {
+            color: vars.$secondary-color;
+            text-decoration: underline;
+        }
+    }
+}
+
+.btn-login {
+    @include mix.button-base;
+    @include mix.button-variant(vars.$secondary-color);
+    width: 100%;
+    padding: fn.rem(12);
+    font-size: fn.rem(16);
+    margin-bottom: fn.rem(24);
+}
+
+.social-login {
+    .divider {
+        display: block;
+        text-align: center;
+        color: fn.tint(vars.$text-color, 30%);
+        margin-bottom: fn.rem(24);
+        position: relative;
+        
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: fn.tint(vars.$dark-color, 80%);
+        }
+        
+        &::before { left: 0; }
+        &::after { right: 0; }
+    }
+    
+    .social-buttons {
+        @include mix.grid(2, fn.rem(16));
+        margin-bottom: fn.rem(24);
+    }
+    
+    .social-btn {
+        @include mix.button-base;
+        @include mix.flex(row, center, center);
+        gap: fn.rem(8);
+        background-color: vars.$light-color;
+        border: 1px solid fn.tint(vars.$dark-color, 80%);
+        color: vars.$text-color;
+        
+        &:hover {
+            background-color: fn.tint(vars.$dark-color, 95%);
+        }
+        
+        &.google { color: #DB4437; }
+        &.facebook { color: #4267B2; }
+    }
+}
+
+.signup-prompt {
+    text-align: center;
+    color: vars.$text-color;
+    margin: 0;
+    
+    a {
+        color: vars.$secondary-color;
+        text-decoration: none;
+        font-weight: vars.$font-weight-bold;
+        
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Responsive adjustments
+@include mix.respond-to(md) {
+    .auth-side {
+        display: none;
+    }
+    
+    .auth-content {
+        padding: fn.rem(24);
+    }
+}
+
+@include mix.respond-to(sm) {
+    .social-login {
+        .social-buttons {
+            grid-template-columns: 1fr;
+        }
+    }
+}

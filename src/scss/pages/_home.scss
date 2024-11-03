@@ -1,0 +1,77 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// Import components
+@use '../components/navbar';
+@use '../components/cards';
+@use '../layouts/footer';
+
+// Hero Section
+.hero-section {
+    @include bg-cover;
+    background-image: linear-gradient(rgba($dark, 0.6), rgba($dark, 0.6)),
+                      url('../images/hero-bg.jpg');
+    min-height: 80vh;
+    @include flex-center;
+    text-align: center;
+    color: $white;
+    margin-top: -#{map-get($z-index, 'navbar')};
+    
+    h1 {
+        font-family: $font-family-heading;
+        font-size: 3.5rem;
+        margin-bottom: $spacer * 2;
+        
+        @include respond-to('md') {
+            font-size: 4.5rem;
+        }
+    }
+
+    p {
+        font-size: 1.25rem;
+        margin-bottom: $spacer * 3;
+    }
+}
+
+// Featured Products
+.featured-products {
+    @include section-padding;
+    
+    .card {
+        @include card-hover;
+        height: 100%;
+        
+        &-img-top {
+            height: 250px;
+            object-fit: cover;
+        }
+    }
+}
+
+// About Section
+.about-section {
+    @include section-padding;
+    background-color: $light;
+    
+    img {
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba($dark, 0.1);
+    }
+}
+
+// Newsletter Section
+.newsletter-section {
+    @include section-padding;
+    background-color: $dark;
+    color: $white;
+    text-align: center;
+
+    .newsletter-form {
+        max-width: 500px;
+        margin: 0 auto;
+        
+        .input-group {
+            margin-top: $spacer * 2;
+        }
+    }
+}

@@ -1,0 +1,222 @@
+// src/scss/components/_cards.scss
+@use '../abstracts/variables' as vars;
+@use '../abstracts/mixins' as mix;
+@use 'sass:color';
+
+.card {
+    @include mix.card-base;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: white;
+    transition: vars.$transition-base;
+  
+    // Card image
+    &-img-wrapper {
+      position: relative;
+      overflow: hidden;
+  
+      &:hover {
+        .card-img-overlay {
+          opacity: 1;
+        }
+  
+        .card-img-top {
+          transform: scale(1.05);
+        }
+      }
+    }
+  
+    &-img-top {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  
+    &-img-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(vars.$dark-color, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  
+    // Card body
+    &-body {
+      flex: 1 1 auto;
+      padding: vars.$spacing-md;
+    }
+  
+    &-title {
+      font-family: vars.$font-primary;
+      font-size: vars.$font-size-lg;
+      margin-bottom: vars.$spacing-sm;
+      color: vars.$primary-color;
+    }
+  
+    &-subtitle {
+      font-size: vars.$font-size-sm;
+      color: rgba(vars.$text-color, 0.7);
+      margin-top: calc(-1 * vars.$spacing-xs);
+      margin-bottom: vars.$spacing-sm;
+    }
+  
+    &-text {
+      margin-bottom: vars.$spacing-sm;
+      color: vars.$text-color;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  
+    // Product card specific
+    &.product-card {
+      border: none;
+      margin-bottom: vars.$spacing-md;
+  
+      &:hover {
+        transform: translateY(-10px);
+        box-shadow: vars.$box-shadow-lg;
+      }
+  
+      .product-actions {
+        display: flex;
+        gap: vars.$spacing-sm;
+  
+        .btn {
+          width: 40px;
+          height: 40px;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: white;
+          color: vars.$primary-color;
+          transition: all 0.3s ease;
+  
+          &:hover {
+            background: vars.$secondary-color;
+            color: white;
+            transform: scale(1.1);
+          }
+        }
+      }
+  
+      .product-price {
+        font-size: vars.$font-size-lg;
+        color: vars.$accent-color;
+        font-weight: vars.$font-weight-bold;
+        margin: vars.$spacing-sm 0;
+      }
+  
+      .product-badge {
+        position: absolute;
+        top: vars.$spacing-sm;
+        left: vars.$spacing-sm;
+        padding: vars.$spacing-xs vars.$spacing-sm;
+        background: vars.$secondary-color;
+        color: white;
+        border-radius: vars.$border-radius-sm;
+        font-size: vars.$font-size-sm;
+        z-index: 1;
+      }
+    }
+  
+    // Feature card
+    &.feature-card {
+      text-align: center;
+      padding: vars.$spacing-lg;
+      border: none;
+      background: rgba(vars.$light-color, 0.5);
+  
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto vars.$spacing-md;
+        background: vars.$secondary-color;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+      }
+    }
+  
+    // Testimonial card
+    &.testimonial-card {
+      text-align: center;
+      padding: vars.$spacing-lg;
+      border: none;
+  
+      .testimonial-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 0 auto vars.$spacing-md;
+        object-fit: cover;
+      }
+  
+      .testimonial-quote {
+        font-style: italic;
+        color: rgba(vars.$text-color, 0.8);
+        margin-bottom: vars.$spacing-md;
+      }
+  
+      .testimonial-author {
+        font-weight: vars.$font-weight-bold;
+      }
+    }
+}
+  
+// Card groups
+.card-group {
+    display: flex;
+    flex-flow: row wrap;
+    gap: vars.$spacing-md;
+  
+    .card {
+      flex: 1 0 300px;
+    }
+}
+  
+// Card deck
+.card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: vars.$spacing-md;
+}
+  
+// Responsive adjustments
+@include mix.respond-to(xs) {
+    .card-img-top {
+      height: 200px;
+    }
+}
+  
+@include mix.respond-to(sm) {
+    .card-group {
+      .card {
+        flex: 1 0 calc(50% - #{vars.$spacing-md});
+      }
+    }
+}
+  
+@include mix.respond-to(lg) {
+    .card-group {
+      .card {
+        flex: 1 0 calc(33.333% - #{vars.$spacing-md});
+      }
+    }
+}

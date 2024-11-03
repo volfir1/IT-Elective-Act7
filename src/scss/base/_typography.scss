@@ -1,0 +1,193 @@
+// src/scss/base/_typography.scss
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as mix;
+@use '../abstracts/functions' as fn;
+@use 'sass:color';
+@use 'sass:map';
+
+// Heading Styles
+h1, .h1 {
+    font-size: fn.rem(40, 16);
+    margin-bottom: $spacing-lg;
+    
+    @include mix.respond-to(md) {
+      font-size: fn.rem(48, 16);
+    }
+}
+  
+h2, .h2 {
+    font-size: fn.rem(32, 16);
+    margin-bottom: $spacing-md;
+    
+    @include mix.respond-to(md) {
+      font-size: fn.rem(40, 16);
+    }
+}
+  
+h3, .h3 {
+    font-size: fn.rem(28, 16);
+    margin-bottom: $spacing-md;
+    
+    @include mix.respond-to(md) {
+      font-size: fn.rem(32, 16);
+    }
+}
+  
+h4, .h4 {
+    font-size: fn.rem(24, 16);
+    margin-bottom: $spacing-sm;
+    
+    @include mix.respond-to(md) {
+      font-size: fn.rem(28, 16);
+    }
+}
+  
+h5, .h5 {
+    font-size: fn.rem(20, 16);
+    margin-bottom: $spacing-sm;
+    
+    @include mix.respond-to(md) {
+      font-size: fn.rem(24, 16);
+    }
+}
+  
+h6, .h6 {
+    font-size: fn.rem(16, 16);
+    margin-bottom: $spacing-sm;
+    
+    @include mix.respond-to(md) {
+      font-size: fn.rem(20, 16);
+    }
+}
+  
+// Paragraph Styles
+p {
+    margin-bottom: $spacing-md;
+    
+    &.lead {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-light;
+    }
+    
+    &.small {
+        font-size: $font-size-sm;
+    }
+}
+  
+// List Styles
+.list-unstyled {
+    list-style: none;
+    padding-left: 0;
+}
+  
+.list-inline {
+    @extend .list-unstyled;
+    
+    li {
+        display: inline-block;
+        margin-right: $spacing-sm;
+        
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+  
+// Text Utilities
+.text-primary { color: $primary-color; }
+.text-secondary { color: $secondary-color; }
+.text-accent { color: $accent-color; }
+.text-light { color: $light-color; }
+.text-dark { color: $dark-color; }
+  
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+  
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.text-capitalize { text-transform: capitalize; }
+  
+.font-weight-light { font-weight: $font-weight-light; }
+.font-weight-normal { font-weight: $font-weight-normal; }
+.font-weight-bold { font-weight: $font-weight-bold; }
+  
+.font-italic { font-style: italic; }
+  
+// Links
+a {
+    color: $primary-color;
+    text-decoration: none;
+    transition: $transition-base;
+    
+    &:hover {
+        color: color.adjust($primary-color, $lightness: -15%);
+        text-decoration: underline;
+    }
+    
+    &.text-muted {
+        color: color.adjust($text-color, $alpha: -0.3);
+        
+        &:hover {
+            color: $text-color;
+        }
+    }
+}
+  
+// Blockquote
+blockquote {
+    margin: $spacing-lg 0;
+    padding: $spacing-md $spacing-lg;
+    border-left: 4px solid $primary-color;
+    font-style: italic;
+    background-color: color.adjust($light-color, $alpha: -0.5);
+    
+    p {
+        margin-bottom: $spacing-sm;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    cite {
+        display: block;
+        margin-top: $spacing-sm;
+        font-style: normal;
+        font-size: $font-size-sm;
+        color: color.adjust($text-color, $alpha: -0.3);
+    }
+}
+  
+// Code
+code {
+    font-family: monospace;
+    font-size: 0.875em;
+    color: $accent-color;
+    background-color: color.adjust($accent-color, $alpha: -0.9);
+    padding: 0.2em 0.4em;
+    border-radius: $border-radius-sm;
+}
+  
+pre {
+    background-color: color.adjust($dark-color, $alpha: -0.95);
+    padding: $spacing-md;
+    border-radius: $border-radius;
+    overflow-x: auto;
+    
+    code {
+        background-color: transparent;
+        padding: 0;
+        font-size: 0.875em;
+        color: inherit;
+    }
+}
+  
+// Responsive Text Classes
+@each $breakpoint, $width in $container-max-widths {
+    @include mix.respond-to($breakpoint) {
+        .text-#{$breakpoint}-start { text-align: left !important; }
+        .text-#{$breakpoint}-center { text-align: center !important; }
+        .text-#{$breakpoint}-end { text-align: right !important; }
+    }
+}

@@ -1,0 +1,34 @@
+// src/scss/main.scss
+
+// 1. Load Sass modules first
+@use 'sass:math';
+@use 'sass:color';
+@use 'sass:map';
+
+// 2. Abstracts (No CSS output)
+@use 'abstracts/variables' as *;
+@use 'abstracts/functions' as fn;
+@use 'abstracts/mixins' as mix;
+
+// 3. Base styles
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/utilities';
+
+// 4. Layout-related sections
+@use 'layouts/grid';
+@use 'layouts/header';
+@use 'layouts/footer';
+
+// 5. Components
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/navbar';
+@use 'components/cart';
+@use 'components/product';
+
+// 6. Page-specific styles
+@use 'pages/home';
+@use 'pages/collections';
+@use 'pages/bundles';
+@use 'pages/login';

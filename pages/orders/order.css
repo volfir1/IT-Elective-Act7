@@ -1,0 +1,331 @@
+/* Luxury Orders Page Styles */
+:root {
+    --primary-color: #2c1810;
+    --secondary-color: #d4af37;
+    --text-color: #333333;
+    --light-gold: #f4e4bc;
+    --dark-gold: #996515;
+    --transition-smooth: all 0.3s ease-in-out;
+    --card-shadow: 0 10px 30px rgba(44, 24, 16, 0.08);
+    --gold-gradient: linear-gradient(135deg, var(--secondary-color), var(--dark-gold));
+    --light-gradient: linear-gradient(135deg, #ffffff, #f8f9fa);
+}
+
+/* Order Card Styling */
+.order-card {
+    transition: var(--transition-smooth);
+    border: none;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    background: #ffffff;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.order-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gold-gradient);
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(44, 24, 16, 0.12);
+}
+
+/* Card Header Styling */
+.order-card .card-header {
+    background: var(--light-gradient);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    padding: 1.5rem;
+    position: relative;
+}
+
+.order-card .card-header h5 {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Status Badge Styling */
+.order-card .badge {
+    font-weight: 500;
+    padding: 0.6em 1em;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+/* Card Body Enhancements */
+.order-card .card-body {
+    padding: 2rem;
+}
+
+.order-card h6 {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* Shipping Details & Order Items Sections */
+.order-card .bg-light {
+    background: rgba(244, 228, 188, 0.1) !important;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem !important;
+    transition: var(--transition-smooth);
+}
+
+.order-card .bg-light:hover {
+    background: rgba(244, 228, 188, 0.2) !important;
+}
+
+/* Order Summary Section */
+.order-card .order-summary {
+    background: var(--light-gradient);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.order-card .order-summary .fw-bold {
+    color: var(--primary-color);
+}
+
+/* Button Styling */
+.order-card .btn {
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: var(--transition-smooth);
+}
+
+.order-card .btn-outline-secondary {
+    border-color: var(--dark-gold);
+    color: var(--dark-gold);
+}
+
+.order-card .btn-outline-secondary:hover {
+    background: var(--gold-gradient);
+    border-color: transparent;
+    color: white;
+}
+
+.order-card .btn-outline-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.order-card .btn-outline-danger:hover {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    border-color: transparent;
+    color: white;
+}
+
+/* Icons in Buttons */
+.order-card .btn i {
+    font-size: 0.9rem;
+}
+
+/* Card Footer */
+.order-card .card-footer {
+    background: transparent;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    padding: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .order-card .card-header {
+        text-align: center;
+    }
+
+    .order-card .badge {
+        margin: 1rem 0;
+    }
+
+    .order-card .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .order-card h6 {
+        text-align: center;
+    }
+
+    .order-card .order-summary {
+        margin-top: 1.5rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .order-card {
+        box-shadow: none !important;
+        border: 1px solid var(--light-gold) !important;
+    }
+
+    .order-card::before {
+        display: none;
+    }
+
+    .btn,
+    .navbar,
+    footer {
+        display: none !important;
+    }
+
+    .card-header {
+        background: transparent !important;
+    }
+
+    .bg-light {
+        background: transparent !important;
+        border: 1px solid #eee !important;
+    }
+
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+/* Animation for Status Changes */
+@keyframes statusUpdate {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.order-card .badge {
+    animation: statusUpdate 0.3s ease-out forwards;
+}
+
+/* Custom Status Colors */
+.badge.bg-warning {
+    background: linear-gradient(135deg, #ffc107, #ffad33) !important;
+    color: var(--primary-color) !important;
+}
+
+.badge.bg-info {
+    background: linear-gradient(135deg, #0dcaf0, #0097b2) !important;
+    color: white !important;
+}
+
+.badge.bg-primary {
+    background: linear-gradient(135deg, #0d6efd, #0143a3) !important;
+}
+
+.badge.bg-success {
+    background: linear-gradient(135deg, #198754, #115c39) !important;
+}
+
+.badge.bg-danger {
+    background: linear-gradient(135deg, #dc3545, #a71d2a) !important;
+}
+
+/* Empty State Styling */
+.text-center.py-5 {
+    padding: 4rem 0;
+}
+
+.text-center.py-5 .fa-shopping-bag {
+    color: var(--light-gold);
+    margin-bottom: 1.5rem;
+}
+
+.text-center.py-5 h3 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.text-center.py-5 .text-muted {
+    color: #6c757d !important;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.text-center.py-5 .btn-dark {
+    background: var(--gold-gradient);
+    border: none;
+    padding: 1rem 2rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-radius: 50px;
+    transition: var(--transition-smooth);
+}
+
+.text-center.py-5 .btn-dark:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+
+
+
+/* order.css */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    cursor: pointer;
+    width: 25px;
+    font-size: 20px;
+    color: #ddd;
+    transition: color 0.3s ease;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #ffc107;
+}
+
+.order-card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.product-review-card img {
+    max-height: 120px;
+    object-fit: contain;
+}
+
+.review-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.review-form {
+    margin-top: 1rem;
+}
+
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}

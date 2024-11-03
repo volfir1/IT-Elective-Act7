@@ -1,0 +1,240 @@
+// src/scss/pages/_bundles.scss
+@use '../abstracts/variables' as vars;
+@use '../abstracts/mixins' as mix;
+@use 'sass:color';
+
+.bundles {
+    padding: vars.$spacing-xl 0;
+   position: relative;
+   margin-top: 3rem;
+    // Bundles Header
+    .bundles-header {
+      margin-bottom: vars.$spacing-xl;
+      text-align: center;
+      background: linear-gradient(rgba(vars.$dark-color, 0.7), rgba(vars.$dark-color, 0.7)),
+                  url('/src/assets/images/backgrounds/bundles-header.jpg') no-repeat center center;
+      background-size: cover;
+      padding: vars.$spacing-xl 0;
+      color: vars.$light-color;
+  
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: vars.$spacing-md;
+      }
+  
+      p {
+        max-width: 600px;
+        margin: 0 auto;
+        color: rgba(vars.$light-color, 0.9);
+      }
+    }
+  
+    // Bundle Card
+    .bundle-card {
+      background: white;
+      border-radius: vars.$border-radius-lg;
+      overflow: hidden;
+      box-shadow: vars.$box-shadow;
+      transition: vars.$transition-base;
+      margin-bottom: vars.$spacing-lg;
+  
+      &:hover {
+        transform: translateY(-10px);
+        box-shadow: vars.$box-shadow-lg;
+  
+        .bundle-image img {
+          transform: scale(1.05);
+        }
+      }
+  
+      .bundle-image {
+        position: relative;
+        height: 300px;
+        overflow: hidden;
+  
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+  
+        .bundle-badge {
+          position: absolute;
+          top: vars.$spacing-md;
+          right: vars.$spacing-md;
+          background: vars.$secondary-color;
+          color: white;
+          padding: vars.$spacing-xs vars.$spacing-sm;
+          border-radius: vars.$border-radius;
+          font-size: vars.$font-size-sm;
+        }
+      }
+  
+      .bundle-content {
+        padding: vars.$spacing-lg;
+  
+        .bundle-title {
+          font-size: 1.5rem;
+          margin-bottom: vars.$spacing-sm;
+          color: vars.$primary-color;
+        }
+  
+        .bundle-description {
+          color: rgba(vars.$text-color, 0.8);
+          margin-bottom: vars.$spacing-md;
+        }
+  
+        .bundle-products {
+          margin-bottom: vars.$spacing-md;
+  
+          h4 {
+            font-size: vars.$font-size-base;
+            color: vars.$accent-color;
+            margin-bottom: vars.$spacing-sm;
+          }
+  
+          ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+  
+            li {
+              display: flex;
+              align-items: center;
+              margin-bottom: vars.$spacing-xs;
+  
+              &::before {
+                content: '•';
+                color: vars.$secondary-color;
+                margin-right: vars.$spacing-xs;
+              }
+            }
+          }
+        }
+  
+        .bundle-price {
+          display: flex;
+          align-items: center;
+          gap: vars.$spacing-md;
+          margin-bottom: vars.$spacing-md;
+  
+          .original-price {
+            text-decoration: line-through;
+            color: rgba(vars.$text-color, 0.5);
+            font-size: vars.$font-size-sm;
+          }
+  
+          .discount-price {
+            font-size: 1.5rem;
+            font-weight: vars.$font-weight-bold;
+            color: vars.$accent-color;
+          }
+  
+          .discount-badge {
+            background: rgba(vars.$success-color, 0.1);
+            color: vars.$success-color;
+            padding: vars.$spacing-xs vars.$spacing-sm;
+            border-radius: vars.$border-radius;
+            font-size: vars.$font-size-sm;
+          }
+        }
+  
+        .bundle-actions {
+          display: flex;
+          gap: vars.$spacing-sm;
+  
+          .btn {
+            flex: 1;
+          }
+        }
+      }
+    }
+  
+    // Featured Bundles
+    .featured-bundles {
+      margin-bottom: vars.$spacing-xl;
+  
+      .section-title {
+        text-align: center;
+        margin-bottom: vars.$spacing-lg;
+  
+        h2 {
+          font-size: 2rem;
+          margin-bottom: vars.$spacing-sm;
+        }
+  
+        p {
+          color: rgba(vars.$text-color, 0.7);
+        }
+      }
+    }
+  
+    // Bundle Benefits
+    .bundle-benefits {
+      background: rgba(vars.$secondary-color, 0.05);
+      padding: vars.$spacing-xl 0;
+      margin-bottom: vars.$spacing-xl;
+  
+      .benefit-item {
+        text-align: center;
+        padding: vars.$spacing-md;
+  
+        i {
+          font-size: 2.5rem;
+          color: vars.$secondary-color;
+          margin-bottom: vars.$spacing-sm;
+        }
+  
+        h3 {
+          font-size: 1.25rem;
+          margin-bottom: vars.$spacing-sm;
+        }
+  
+        p {
+          color: rgba(vars.$text-color, 0.7);
+        }
+      }
+    }
+}
+  
+// Responsive
+@include mix.respond-to(md) {
+    .bundles {
+      .bundle-card {
+        .bundle-content {
+          padding: vars.$spacing-md;
+  
+          .bundle-title {
+            font-size: 1.25rem;
+          }
+  
+          .bundle-price {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: vars.$spacing-xs;
+          }
+        }
+      }
+    }
+}
+  
+@include mix.respond-to(sm) {
+    .bundles {
+      .bundles-header {
+        h1 {
+          font-size: 2rem;
+        }
+      }
+  
+      .bundle-benefits {
+        .benefit-item {
+          margin-bottom: vars.$spacing-lg;
+  
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+}

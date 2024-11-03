@@ -1,0 +1,58 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.navbar {
+    padding: $spacer 0;
+    background-color: rgba($dark, 0.95) !important;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: map-get($z-index, 'navbar');
+
+    &-brand {
+        font-family: $font-family-heading;
+        font-weight: bold;
+        color: $white;
+
+        &:hover {
+            color: darken($white, 10%);
+        }
+    }
+
+    &-nav {
+        .nav-link {
+            color: $white;
+            padding: $spacer * 0.5 $spacer;
+            transition: $transition-base;
+
+            &:hover {
+                color: darken($white, 15%);
+            }
+
+            &.active {
+                color: $white;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .cart-icon {
+        position: relative;
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: $primary;
+            color: $white;
+            border-radius: 50%;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
+    }
+
+    @include respond-to('md') {
+        padding: ($spacer * 0.75) 0;
+    }
+}

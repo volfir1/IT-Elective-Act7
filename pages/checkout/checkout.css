@@ -1,0 +1,204 @@
+/* Root Variables */
+:root {
+    --primary-color: #2c1810;
+    --secondary-color: #d4af37;
+    --text-color: #333333;
+    --light-gold: #f4e4bc;
+    --dark-gold: #996515;
+    --transition-smooth: all 0.3s ease-in-out;
+}
+
+/* Container and Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Page Header */
+h2.mb-4 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid var(--secondary-color);
+    padding-bottom: 1rem;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: var(--transition-smooth);
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background-color: var(--light-gold);
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.card-header h4 {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Order Summary Styles */
+.order-md-2 .card-body {
+    font-size: 0.95rem;
+}
+
+.order-md-2 .d-flex {
+    padding: 0.5rem 0;
+}
+
+.order-md-2 hr {
+    margin: 1rem 0;
+    border-color: var(--light-gold);
+    opacity: 0.5;
+}
+
+.order-md-2 strong {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+/* Form Styles */
+.form-label {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border: 2px solid var(--light-gold);
+    border-radius: 8px;
+    padding: 0.8rem;
+    transition: var(--transition-smooth);
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+}
+
+textarea.form-control {
+    min-height: 100px;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--secondary-color);
+    border: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-gold);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-lg {
+    font-size: 1.1rem;
+}
+
+/* Price and Amount Styles */
+[class*="justify-content-between"] span:last-child,
+[class*="justify-content-between"] strong:last-child {
+    color: var(--dark-gold);
+    font-weight: 600;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .order-md-2 {
+        margin-bottom: 2rem;
+    }
+    
+    h2.mb-4 {
+        font-size: 2rem;
+    }
+    
+    .card-header {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .btn-primary {
+        padding: 0.8rem 1.5rem;
+    }
+}
+
+/* Animation for Form Submission */
+@keyframes submitPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.btn-primary:active {
+    animation: submitPulse 0.3s ease-in-out;
+}
+
+/* Form Validation Styles */
+.form-control:invalid {
+    border-color: #dc3545;
+}
+
+.form-control:valid {
+    border-color: var(--light-gold);
+}
+
+/* Optional: Loading State */
+.btn-primary.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn-primary.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid var(--primary-color);
+    border-radius: 50%;
+    border-right-color: transparent;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}

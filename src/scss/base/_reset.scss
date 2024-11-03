@@ -1,0 +1,184 @@
+// src/scss/base/_reset.scss
+@use '../abstracts/variables' as *;
+@use 'sass:color';
+
+// Modern CSS Reset
+
+// Box sizing
+*, 
+*::before, 
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// Root defaults
+:root {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+// Core body defaults
+html {
+  scroll-behavior: smooth;
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: $font-secondary;
+  color: $text-color;
+  background-color: white;
+}
+
+// Typography resets
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  font-family: $font-primary;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+}
+
+// List resets
+ul,
+ol {
+  padding-left: 2rem;
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+}
+
+dl {
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+}
+
+// Remove list styles on ul, ol elements with a list role
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// Link resets
+a {
+  color: $primary-color;
+  text-decoration: none;
+  background-color: transparent;
+  
+  &:hover {
+    color: color.adjust($primary-color, $lightness: -15%);
+    text-decoration: underline;
+  }
+}
+
+// Media defaults
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+// Form element defaults
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+// Remove all animations and transitions for people that prefer not to see them
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// Tables
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: $spacing-md;
+}
+
+th {
+  text-align: left;
+}
+
+// Selection
+::selection {
+  background-color: $primary-color;
+  color: $light-color;
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $light-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $accent-color;
+  border-radius: 4px;
+  
+  &:hover {
+    background: color.adjust($accent-color, $lightness: -10%);
+  }
+}
+
+// Focus styles
+:focus {
+  outline: 3px solid color.adjust($primary-color, $alpha: -0.5);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid color.adjust($primary-color, $alpha: -0.5);
+  outline-offset: 2px;
+}
