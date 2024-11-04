@@ -146,13 +146,13 @@ include_once '../../includes/header.php';
                                     <i class="fas fa-print me-2"></i>Print Order
                                 </button>
 
-                                <?php if (!$order['is_received'] && $order['status'] !== 'cancelled'): ?>
-            <button type="button" 
-                    class="btn btn-success btn-sm"
-                    onclick="markAsReceived(<?php echo $order['id']; ?>)">
-                <i class="fas fa-check me-2"></i>Mark as Received
-            </button>
-        <?php endif; ?>
+                                <?php if (!$order['is_received']): ?>
+                                    <button type="button" 
+                                            class="btn btn-success btn-sm"
+                                            onclick="markAsReceived(<?php echo $order['id']; ?>)">
+                                        <i class="fas fa-check me-2"></i>Mark as Received
+                                    </button>
+                                <?php endif; ?>
 
                                 <?php if ($order['is_received']): ?>
                                     <button type="button" 
@@ -341,9 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function getStatusBadgeClass($status) {
     return match($status) {
         'pending' => 'bg-warning text-dark',
-        'processing' => 'bg-info text-dark',
-        'shipped' => 'bg-primary',
-        'delivered' => 'bg-success',
+        'completed' => 'bg-success',
         'cancelled' => 'bg-danger',
         default => 'bg-secondary'
     };

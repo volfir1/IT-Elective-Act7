@@ -18,37 +18,56 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['order_id'])) {
 $orderId = (int)$_POST['order_id'];
 
 try {
-    // Check if order belongs to user, isn't cancelled, and isn't already received
+    // Begin transaction
+    $conn->beginTransaction();
+
+    // First check if order exists and can be marked as received
     $stmt = $conn->prepare("
         SELECT id 
         FROM orders 
         WHERE id = ? 
         AND user_id = ? 
-        AND status != 'cancelled' 
-        AND is_received = FALSE
+        AND status = 'pending'
+        AND is_received = 0
     ");
     $stmt->execute([$orderId, $_SESSION['user_id']]);
     
     if (!$stmt->fetch()) {
+        $conn->rollBack();
         echo json_encode(['success' => false, 'message' => 'Order cannot be marked as received']);
         exit;
     }
 
-    // Mark order as received
+    // Update both is_received and status
     $stmt = $conn->prepare("
         UPDATE orders 
-        SET is_received = TRUE 
-        WHERE id = ? AND user_id = ?
+        SET is_received = 1,
+            status = 'completed'
+        WHERE id = ? 
+        AND user_id = ?
     ");
-    $success = $stmt->execute([$orderId, $_SESSION['user_id']]);
-
-    echo json_encode([
-        'success' => $success,
-        'message' => $success ? 'Order marked as received successfully' : 'Error updating order'
-    ]);
+    
+    $result = $stmt->execute([$orderId, $_SESSION['user_id']]);
+    
+    if ($result) {
+        $conn->commit();
+        echo json_encode([
+            'success' => true,
+            'message' => 'Order marked as received successfully'
+        ]);
+    } else {
+        $conn->rollBack();
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to update order'
+        ]);
+    }
 
 } catch(PDOException $e) {
-    error_log($e->getMessage());
+    if ($conn->inTransaction()) {
+        $conn->rollBack();
+    }
+    error_log("Error in mark-received.php: " . $e->getMessage());
     echo json_encode([
         'success' => false,
         'message' => 'Error updating order'
