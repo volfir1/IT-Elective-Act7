@@ -24,25 +24,28 @@ try {
               COUNT(r.id) as review_count
               FROM products p
               LEFT JOIN reviews r ON p.id = r.product_id
+              LEFT JOIN users u ON r.user_id = u.id
               WHERE 1=1";
-    $params = [];
-
-    if ($search) {
-        $query .= " AND (p.name LIKE ? OR p.description LIKE ?)";
-        $params[] = "%{$search}%";
-        $params[] = "%{$search}%";
-    }
-
-    if ($category) {
-        $query .= " AND p.category = ?";
-        $params[] = $category;
-    }
-
+    
+    // ... rest of the query conditions ...
+    
     $query .= " GROUP BY p.id ORDER BY p.name";
     
     $stmt = $conn->prepare($query);
     $stmt->execute($params);
     $products = $stmt->fetchAll();
+
+    // Fetch reviews separately for each product
+    foreach($products as &$product) {
+        $reviewQuery = "SELECT r.rating, r.comment, u.username, r.created_at 
+                       FROM reviews r 
+                       JOIN users u ON r.user_id = u.id 
+                       WHERE r.product_id = ?
+                       ORDER BY r.created_at DESC";
+        $reviewStmt = $conn->prepare($reviewQuery);
+        $reviewStmt->execute([$product['id']]);
+        $product['reviews'] = $reviewStmt->fetchAll();
+    }
 } catch(PDOException $e) {
     $products = [];
 }
@@ -135,62 +138,156 @@ include_once '../../includes/header.php';
 
     <!-- Products Grid -->
     <div class="row g-4">
-        <?php foreach($products as $product): ?>
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm hover-shadow transition-shadow">
-                    <div class="position-relative">
-                        <img src="../../images/products/<?php echo htmlspecialchars($product['image']); ?>" 
-                             class="card-img-top" 
-                             alt="<?php echo htmlspecialchars($product['name']); ?>"
-                             onerror="this.src='../../images/placeholder.jpg'"
-                             style="height: 300px; object-fit: cover;">
-                        <span class="position-absolute top-0 end-0 m-2 badge bg-dark">
-                            <?php echo htmlspecialchars($product['category']); ?>
-                        </span>
-                    </div>
+    <?php foreach($products as $product): ?>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm hover-shadow transition-shadow">
+                <!-- Product Image Section -->
+                <div class="position-relative">
+                    <img src="../../images/products/<?php echo htmlspecialchars($product['image']); ?>" 
+                         class="card-img-top" 
+                         alt="<?php echo htmlspecialchars($product['name']); ?>"
+                         onerror="this.src='../../images/placeholder.jpg'"
+                         style="height: 300px; object-fit: cover;">
+                    <span class="position-absolute top-0 end-0 m-2 badge bg-dark">
+                        <?php echo htmlspecialchars($product['category']); ?>
+                    </span>
+                </div>
+                
+                <!-- Product Details Section -->
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
+                    <p class="card-text text-muted"><?php echo htmlspecialchars($product['description']); ?></p>
                     
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
-                        <p class="card-text text-muted"><?php echo htmlspecialchars($product['description']); ?></p>
-                        <div class="mt-auto">
-                            <p class="card-text mb-2">
-                                <span class="h4 text-dark">$<?php echo number_format($product['price'], 2); ?></span>
-                            </p>
-                            <div class="rating-stars mb-2">
-            <?php
-            $rating = round($product['average_rating']);
-            for($i = 1; $i <= 5; $i++) {
-                if($i <= $rating) {
-                    echo '<i class="fas fa-star text-warning"></i>';
-                } else {
-                    echo '<i class="far fa-star text-warning"></i>';
-                }
-            }
+                    <!-- Price and Actions Section -->
+                    <div class="mt-auto">
+                        <!-- Price -->
+                        <p class="card-text mb-2">
+                            <span class="h4 text-dark">$<?php echo number_format($product['price'], 2); ?></span>
+                        </p>
+                        
+                        <!-- Ratings Section -->
+                        <div class="rating-stars mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="stars">
+                                    <?php
+                                    $rating = round($product['average_rating']);
+                                    for($i = 1; $i <= 5; $i++) {
+                                        if($i <= $rating) {
+                                            echo '<i class="fas fa-star text-warning"></i>';
+                                        } else {
+                                            echo '<i class="far fa-star text-warning"></i>';
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <button type="button" 
+                                        class="btn btn-link text-decoration-none ms-2" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#reviewModal<?php echo $product['id']; ?>">
+                                    <small class="text-muted">
+                                        (<?php echo $product['review_count']; ?> reviews)
+                                    </small>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Cart Actions -->
+                        <?php if(isLoggedIn()): ?>
+                            <form class="cart-form">
+                                <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                                <div class="input-group">
+                                    <input type="number" name="quantity" class="form-control" 
+                                           value="1" min="1" max="10">
+                                    <button type="submit" class="btn btn-dark">
+                                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                                    </button>
+                                </div>
+                            </form>
+                        <?php else: ?>
+                            <a href="../auth/login.php" class="btn btn-dark w-100">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login to Purchase
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Review Modal -->
+            <div class="modal fade" id="reviewModal<?php echo $product['id']; ?>" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Reviews for <?php echo htmlspecialchars($product['name']); ?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Overall Rating Summary -->
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="rating-stars me-3">
+                                    <?php
+                                    for($i = 1; $i <= 5; $i++) {
+                                        if($i <= $rating) {
+                                            echo '<i class="fas fa-star text-warning"></i>';
+                                        } else {
+                                            echo '<i class="far fa-star text-warning"></i>';
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <h4 class="mb-0"><?php echo number_format($product['average_rating'], 1); ?> out of 5</h4>
+                                <span class="text-muted ms-2">(<?php echo $product['review_count']; ?> reviews)</span>
+                            </div>
+
+                            <!-- Reviews List -->
+                            <div class="reviews-container">
+                            <?php
+    if (!empty($product['reviews'])) {
+        foreach ($product['reviews'] as $review) {
             ?>
-            <small class="text-muted ms-2">(<?php echo $product['review_count']; ?> reviews)</small>
-        </div>
+            <div class="review-item border-bottom pb-3 mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="rating-stars">
+                        <?php
+                        for($i = 1; $i <= 5; $i++) {
+                            if($i <= $review['rating']) {
+                                echo '<i class="fas fa-star text-warning"></i>';
+                            } else {
+                                echo '<i class="far fa-star text-warning"></i>';
+                            }
+                        }
+                        ?>
+                    </div>
+                    <small class="text-muted">
+                        <?php echo date('M d, Y', strtotime($review['created_at'])); ?>
+                    </small>
+                </div>
+                <p class="mb-1"><?php echo htmlspecialchars($review['comment'], ENT_QUOTES, 'UTF-8'); ?></p>
+                <small class="text-muted">By <?php echo htmlspecialchars($review['username'], ENT_QUOTES, 'UTF-8'); ?></small>
+            </div>
+            <?php
+        }
+    } else {
+        echo '<p class="text-center text-muted">No reviews yet</p>';
+    }
+    ?>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
                             <?php if(isLoggedIn()): ?>
-                                <form class="cart-form">
-                                    <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-                                    <div class="input-group">
-                                        <input type="number" name="quantity" class="form-control" 
-                                               value="1" min="1" max="10">
-                                        <button type="submit" class="btn btn-dark">
-                                            <i class="fas fa-cart-plus me-2"></i>Add to Cart
-                                        </button>
-                                    </div>
-                                </form>
+                            
                             <?php else: ?>
-                                <a href="../auth/login.php" class="btn btn-dark w-100">
-                                    <i class="fas fa-sign-in-alt me-2"></i>Login to Purchase
+                                <a href="../auth/login.php" class="btn btn-dark">
+                                    Login to Write a Review
                                 </a>
                             <?php endif; ?>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
-    </div>
+        </div>
+    <?php endforeach; ?>
+</div>
 </div>
 
 <!-- Add this CSS to your stylesheet or in a style tag -->

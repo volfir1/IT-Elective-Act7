@@ -868,6 +868,14 @@ html {
     .hero-section { padding: 80px 0; }
 }
 
+
+.shop-now-btn {
+    transition: color 0.3s ease;
+}
+
+.shop-now-btn:hover {
+    color: white !important;
+}
 /* Add margin bottom to accommodate indicators *    /
 .featured-products .carousel {
     margin-bottom: 60px;

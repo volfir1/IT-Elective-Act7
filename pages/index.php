@@ -140,13 +140,11 @@ include_once '../includes/header.php';
             <button class="carousel-control-prev" type="button" 
                     data-bs-target="#featuredProductsCarousel" 
                     data-bs-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" 
                     data-bs-target="#featuredProductsCarousel" 
                     data-bs-slide="next">
-                <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
@@ -178,7 +176,7 @@ include_once '../includes/header.php';
                         </div>
                         <p class="h5 mb-3">$<?php echo number_format($product['price'], 2); ?></p>
                         <a href="products/products.php?id=<?php echo $product['id']; ?>" 
-                           class="btn btn-dark w-100">Shop Now</a>
+                        class="btn btn-dark w-100 shop-now-btn">Shop Now</a>
                     </div>
                 </div>
             </div>
