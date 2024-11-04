@@ -128,7 +128,7 @@ include_once '../../includes/header.php';
                 <!-- Cart Summary -->
                 <div class="row">
                     <div class="col-md-6">
-                        <a href="/act7/pages/products/products.php" class="btn btn-outline-primary">
+                        <a href="../act7/pages/products/products.php" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left me-2"></i>Continue Shopping
                         </a>
                     </div>

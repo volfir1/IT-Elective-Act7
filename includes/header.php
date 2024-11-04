@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/functions.php';
+
 // Add this at the top of your header.php file, after the database connection
 $cartCount = 0;
 if (isLoggedIn()) {
@@ -17,12 +19,14 @@ if (isLoggedIn()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITE_NAME; ?></title>
+    <link rel="icon" type="image/x-icon" href="../../images/logo/rounded-logo.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="/act7/pages/css/index.css" rel="stylesheet">
+    <link href="/act7/pages/css/footer.css" rel="stylesheet">
 </head>
 <body>
     <!-- Toast for notifications -->
@@ -35,6 +39,7 @@ if (isLoggedIn()) {
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/act7/pages/index.php">
+                
                 <i class="fas fa-spray-can-sparkles me-2"></i>
                 <?php echo SITE_NAME; ?>
             </a>

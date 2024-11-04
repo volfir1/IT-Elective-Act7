@@ -12,9 +12,9 @@
                 <div class="col-md-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="/act7/index.php" class="text-light">Home</a></li>
-                        <li><a href="/act7/pages/products/index.php" class="text-light">Products</a></li>
-                        <li><a href="/act7/cart.php" class="text-light">Cart</a></li>
+                        <li><a href="../index.php" class="text-light">Home</a></li>
+                        <li><a href="../products/products.php" class="text-light">Products</a></li>
+                        <li><a href="/act7/pages/cart/cart.php" class="text-light">Cart</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">

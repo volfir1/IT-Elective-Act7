@@ -64,7 +64,7 @@ include_once '../../includes/header.php';
         <div class="row">
             <?php foreach($orders as $order): ?>
                 <div class="col-12 mb-4">
-                    <div class="card order-card">
+                <div class="card order-card" data-order-id="<?php echo $order['id']; ?>">
                         <div class="card-header bg-light">
                             <div class="row align-items-center">
                                 <div class="col-md-4">
@@ -140,35 +140,35 @@ include_once '../../includes/header.php';
 
                         <div class="card-footer bg-white">
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" 
-                                        class="btn btn-outline-secondary btn-sm"
-                                        onclick="window.print()">
-                                    <i class="fas fa-print me-2"></i>Print Order
-                                </button>
+                            <button type="button" 
+                class="btn btn-outline-secondary btn-sm"
+                onclick="window.print()">
+            <i class="fas fa-print me-2"></i>Print Order
+        </button>
 
-                                <?php if (!$order['is_received']): ?>
-                                    <button type="button" 
-                                            class="btn btn-success btn-sm"
-                                            onclick="markAsReceived(<?php echo $order['id']; ?>)">
-                                        <i class="fas fa-check me-2"></i>Mark as Received
-                                    </button>
-                                <?php endif; ?>
+                                <?php if (!$order['is_received'] && $order['status'] !== 'cancelled'): ?>
+            <button type="button" 
+                    class="btn btn-success btn-sm"
+                    onclick="markAsReceived(<?php echo $order['id']; ?>)">
+                <i class="fas fa-check me-2"></i>Mark as Received
+            </button>
+        <?php endif; ?>
 
-                                <?php if ($order['is_received']): ?>
-                                    <button type="button" 
-                                            class="btn btn-primary btn-sm"
-                                            onclick="showReviewModal(<?php echo $order['id']; ?>)">
-                                        <i class="fas fa-star me-2"></i>Review Items
-                                    </button>
-                                <?php endif; ?>
+                                <?php if ($order['is_received'] && $order['status'] !== 'cancelled'): ?>
+            <button type="button" 
+                    class="btn btn-primary btn-sm"
+                    onclick="showReviewModal(<?php echo $order['id']; ?>)">
+                <i class="fas fa-star me-2"></i>Review Items
+            </button>
+        <?php endif; ?>
 
                                 <?php if ($order['status'] === 'pending'): ?>
-                                    <button type="button" 
-                                            class="btn btn-outline-danger btn-sm"
-                                            onclick="cancelOrder(<?php echo $order['id']; ?>)">
-                                        <i class="fas fa-times me-2"></i>Cancel Order
-                                    </button>
-                                <?php endif; ?>
+            <button type="button" 
+                    class="btn btn-outline-danger btn-sm"
+                    onclick="cancelOrder(<?php echo $order['id']; ?>)">
+                <i class="fas fa-times me-2"></i>Cancel Order
+            </button>
+        <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -200,7 +200,28 @@ function cancelOrder(orderId) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    location.reload();
+                    // Find the card containing this order
+                    const orderCard = document.querySelector(`[data-order-id="${orderId}"]`);
+                    if (orderCard) {
+                        // Update the status badge
+                        const statusBadge = orderCard.querySelector('.badge');
+                        if (statusBadge) {
+                            statusBadge.className = 'badge bg-danger';
+                            statusBadge.textContent = 'Cancelled';
+                        }
+                        
+                        // Update the footer buttons
+                        const buttonContainer = orderCard.querySelector('.card-footer .d-flex');
+                        if (buttonContainer) {
+                            buttonContainer.innerHTML = `
+                                <button type="button" 
+                                        class="btn btn-outline-secondary btn-sm"
+                                        onclick="window.print()">
+                                    <i class="fas fa-print me-2"></i>Print Order
+                                </button>
+                            `;
+                        }
+                    }
                 } else {
                     alert(data.message || 'Error cancelling order');
                 }

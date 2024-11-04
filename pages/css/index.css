@@ -806,3 +806,44 @@ html {
 .footer .col-md-4:nth-child(3) {
     animation-delay: 0.4s;
 }
+
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #000;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.carousel-indicators {
+    bottom: -50px;
+}
+
+.carousel-indicators button {
+    background-color: #000 !important;
+}
+
+.featured-products .card {
+    transition: transform 0.2s;
+}
+
+.featured-products .card:hover {
+    transform: translateY(-5px);
+}
+
+/* Ensure consistent image heights */
+.featured-products .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Add margin bottom to accommodate indicators *    /
+.featured-products .carousel {
+    margin-bottom: 60px;
+}

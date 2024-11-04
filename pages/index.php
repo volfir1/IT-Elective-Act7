@@ -24,29 +24,69 @@ include_once '../includes/header.php';
     </div>
 </div>
 
-<!-- Featured Products -->
 <section class="featured-products py-5">
     <div class="container">
         <h2 class="text-center mb-5">Featured Products</h2>
-        <div class="row">
-            <?php foreach($featured_products as $product): ?>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <img src="../images/products/<?php echo htmlspecialchars($product['image']); ?>" 
-                         class="card-img-top" 
-                         alt="<?php echo htmlspecialchars($product['name']); ?>"
-                         onerror="this.src='../images/placeholder.jpg'">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
-                        <p class="card-text"><?php echo htmlspecialchars($product['description']); ?></p>
-                        <p class="card-text mt-auto">
-                            <strong>$<?php echo number_format($product['price'], 2); ?></strong>
-                        </p>
-                        <a href="products/products.php?id=<?php echo $product['id']; ?>" class="btn btn-dark mt-2">View Details</a>
+        
+        <div id="featuredProductsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- Carousel indicators -->
+            <div class="carousel-indicators">
+                <?php 
+                $totalSlides = ceil(count($featured_products) / 3);
+                for($i = 0; $i < $totalSlides; $i++): 
+                ?>
+                    <button type="button" 
+                            data-bs-target="#featuredProductsCarousel" 
+                            data-bs-slide-to="<?php echo $i; ?>" 
+                            <?php echo $i === 0 ? 'class="active" aria-current="true"' : ''; ?>
+                            aria-label="Slide <?php echo $i + 1; ?>">
+                    </button>
+                <?php endfor; ?>
+            </div>
+
+            <!-- Carousel content -->
+            <div class="carousel-inner">
+                <?php 
+                $chunks = array_chunk($featured_products, 3);
+                foreach($chunks as $index => $productGroup): 
+                ?>
+                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                    <div class="row">
+                        <?php foreach($productGroup as $product): ?>
+                        <div class="col-md-4">
+                            <div class="card h-100 mx-2">
+                                <img src="../images/products/<?php echo htmlspecialchars($product['image']); ?>" 
+                                     class="card-img-top" 
+                                     alt="<?php echo htmlspecialchars($product['name']); ?>"
+                                     onerror="this.src='../images/products/placeholder.jpg'">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
+                                    <p class="card-text"><?php echo htmlspecialchars($product['description']); ?></p>
+                                    <p class="card-text mt-auto">
+                                        <strong>$<?php echo number_format($product['price'], 2); ?></strong>
+                                    </p>
+                                    <a href="products/products.php?id=<?php echo $product['id']; ?>" 
+                                       class="btn btn-dark mt-2">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+                <?php endforeach; ?>
             </div>
-            <?php endforeach; ?>
+
+            <!-- Carousel controls -->
+            <button class="carousel-control-prev" type="button" 
+                    data-bs-target="#featuredProductsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" 
+                    data-bs-target="#featuredProductsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
 </section>
@@ -65,7 +105,7 @@ include_once '../includes/header.php';
                 <img src="../images/about-bg.jpg" 
                      alt="About Us" 
                      class="img-fluid rounded shadow"
-                     onerror="this.src='../images/placeholder.jpg'">
+                     onerror="this.src='../images/products/shop.jpg'">
             </div>
         </div>
     </div>
@@ -150,5 +190,14 @@ document.addEventListener('DOMContentLoaded', function() {
             observer.observe(card);
         });
     }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var myCarousel = new bootstrap.Carousel(document.getElementById('featuredProductsCarousel'), {
+            interval: 5000, // 5 seconds per slide
+            wrap: true,     // Continuous loop
+            touch: true     // Enable touch swiping on mobile
+        });
+    });
 });
 </script>
