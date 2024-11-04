@@ -795,30 +795,32 @@ html {
     }
 }
 
-.footer .col-md-4 {
-    animation: fadeInUp 0.5s ease-out forwards;
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('../../images/bg/collections.jpg') center/cover no-repeat;
+    padding: 120px 0;
+    position: relative;
 }
 
-.footer .col-md-4:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.footer .col-md-4:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-
+/* Carousel Styling */
 .carousel-control-prev,
 .carousel-control-next {
-    width: 5%;
-    background-color: rgba(0,0,0,0.2);
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    opacity: 0.8;
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: #000;
-    border-radius: 50%;
-    padding: 10px;
+.carousel-control-prev { left: -20px; }
+.carousel-control-next { right: -20px; }
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
 }
 
 .carousel-indicators {
@@ -826,21 +828,44 @@ html {
 }
 
 .carousel-indicators button {
-    background-color: #000 !important;
+    background-color: #666;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
 }
 
-.featured-products .card {
-    transition: transform 0.2s;
+.carousel-item {
+    padding: 20px 40px;
 }
 
-.featured-products .card:hover {
+/* Card Hover Effects */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* Ensure consistent image heights */
-.featured-products .card-img-top {
-    height: 200px;
-    object-fit: cover;
+/* Rating Stars */
+.rating-stars {
+    color: #ffd700;
+}
+
+/* Newsletter Section */
+.newsletter-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .carousel-control-prev { left: -10px; }
+    .carousel-control-next { right: -10px; }
+    .carousel-item { padding: 10px 20px; }
+    .hero-section { padding: 80px 0; }
 }
 
 /* Add margin bottom to accommodate indicators *    /

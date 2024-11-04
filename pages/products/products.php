@@ -17,22 +17,28 @@ try {
 }
 
 // Fetch products with search and category filter
+// Modify the products query to include ratings
 try {
-    $query = "SELECT * FROM products WHERE 1=1";
+    $query = "SELECT p.*, 
+              COALESCE(AVG(r.rating), 0) as average_rating,
+              COUNT(r.id) as review_count
+              FROM products p
+              LEFT JOIN reviews r ON p.id = r.product_id
+              WHERE 1=1";
     $params = [];
 
     if ($search) {
-        $query .= " AND (name LIKE ? OR description LIKE ?)";
+        $query .= " AND (p.name LIKE ? OR p.description LIKE ?)";
         $params[] = "%{$search}%";
         $params[] = "%{$search}%";
     }
 
     if ($category) {
-        $query .= " AND category = ?";
+        $query .= " AND p.category = ?";
         $params[] = $category;
     }
 
-    $query .= " ORDER BY name";
+    $query .= " GROUP BY p.id ORDER BY p.name";
     
     $stmt = $conn->prepare($query);
     $stmt->execute($params);
@@ -150,7 +156,19 @@ include_once '../../includes/header.php';
                             <p class="card-text mb-2">
                                 <span class="h4 text-dark">$<?php echo number_format($product['price'], 2); ?></span>
                             </p>
-                            
+                            <div class="rating-stars mb-2">
+            <?php
+            $rating = round($product['average_rating']);
+            for($i = 1; $i <= 5; $i++) {
+                if($i <= $rating) {
+                    echo '<i class="fas fa-star text-warning"></i>';
+                } else {
+                    echo '<i class="far fa-star text-warning"></i>';
+                }
+            }
+            ?>
+            <small class="text-muted ms-2">(<?php echo $product['review_count']; ?> reviews)</small>
+        </div>
                             <?php if(isLoggedIn()): ?>
                                 <form class="cart-form">
                                     <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
